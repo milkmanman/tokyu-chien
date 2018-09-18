@@ -28,26 +28,46 @@ def trainurl():
         retnum = 3
     elif (isnobori == "false" and linetype == "dento"):
         retnum = 13
+    elif (isnobori == "true" and linetype == "touyoko"):
+        retnum = 1
+    elif (isnobori == "false" and linetype == "touyoko"):
+        retnum = 11
+    elif (isnobori == "true" and linetype == "meguro"):
+        retnum = 2
+    elif (isnobori == "false" and linetype == "meguro"):
+        retnum = 12
+
     return retnum
 
-url = 'https://www.tokyu.co.jp/railway/delay/print.php?line=' + str(trainurl()) + '&d='+ dataforurl  +'_1'
-ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) '\
-     'AppleWebKit/537.36 (KHTML, like Gecko) '\
-     'Chrome/55.0.2883.95 Safari/537.36 '
 
-req = urllib.request.Request(url, headers={'User-Agent': ua})
-html = urllib.request.urlopen(req)
-mailbody = "train delay : "
-soup = BeautifulSoup(html, "html.parser")
-topicsindex = soup.find('div', attrs={'id' : 'print4'})
-topics = topicsindex.find('table').find_all('tr')
-for topic in topics:
-    tds = topic.find_all('td')
-    for td in tds:
-        print(td.text)
-        mailbody += td.text 
+def getTrainInfo(numberstr):
+    url = 'https://www.tokyu.co.jp/railway/delay/print.php?line=' + numberstr + '&d='+ dataforurl +'_1'
+    ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) '\
+         'AppleWebKit/537.36 (KHTML, like Gecko) '\
+         'Chrome/55.0.2883.95 Safari/537.36 '
 
-print(soup.find('head').find('title').text)
+    req = urllib.request.Request(url, headers={'User-Agent': ua})
+    html = urllib.request.urlopen(req)
+    mailbody = "train delay : "
+    soup = BeautifulSoup(html, "html.parser")
+    topicsindex = soup.find('div', attrs={'id' : 'print4'})
+    topics = topicsindex.find('table').find_all('tr')
+    for topic in topics:
+        tds = topic.find_all('td')
+        for td in tds:
+            print(td.text)
+            mailbody += td.text
+    return mailbody
+
+
+def getInfoURL(numberstr):
+    url = 'https://www.tokyu.co.jp/railway/delay/print.php?line=' + str(trainurl()) + '&d='+ numberstr  +'_1'
+    return mailbody
+
+
+num = str(trainurl())
+mailbody = getTrainInfo(num)
+url = getInfoURL(num)
 
 line_notify_token = config['line_notify']['token']
 line_notify_api = 'https://notify-api.line.me/api/notify'
