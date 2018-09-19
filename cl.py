@@ -20,15 +20,7 @@ dataforurl =  iso.replace('-', '')
 
 def trainurl():
     retnum = 0
-    if (isnobori == "true" and linetype == "setagaya"):
-        retnum = 7
-    elif (isnobori == "false" and linetype == "setagaya"):
-        retnum = 17
-    elif (isnobori == "true" and linetype == "dento"):
-        retnum = 3
-    elif (isnobori == "false" and linetype == "dento"):
-        retnum = 13
-    elif (isnobori == "true" and linetype == "touyoko"):
+    if (isnobori == "true" and linetype == "touyoko"):
         retnum = 1
     elif (isnobori == "false" and linetype == "touyoko"):
         retnum = 11
@@ -36,6 +28,26 @@ def trainurl():
         retnum = 2
     elif (isnobori == "false" and linetype == "meguro"):
         retnum = 12
+    elif (isnobori == "true" and linetype == "dento"):
+        retnum = 3
+    elif (isnobori == "false" and linetype == "dento"):
+        retnum = 13
+    elif (isnobori == "true" and linetype == "oimachi"):
+        retnum = 4
+    elif (isnobori == "false" and linetype == "oimachi"):
+        retnum = 14
+    elif (isnobori == "true" and linetype == "ikegami"):
+        retnum = 5
+    elif (isnobori == "false" and linetype == "ikegami"):
+        retnum = 15
+    elif (isnobori == "true" and linetype == "tamagawa"):
+        retnum = 6
+    elif (isnobori == "false" and linetype == "tamagawa"):
+        retnum = 16
+    elif (isnobori == "true" and linetype == "setagaya"):
+        retnum = 7
+    elif (isnobori == "false" and linetype == "setagaya"):
+        retnum = 17
 
     return retnum
 
